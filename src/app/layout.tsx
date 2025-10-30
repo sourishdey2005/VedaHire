@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'VedaHire',
@@ -26,8 +27,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body">
-        {children}
+      <body className="font-body flex flex-col min-h-screen">
+        <main className="flex-1">{children}</main>
+        <Footer />
         <Toaster />
       </body>
     </html>
