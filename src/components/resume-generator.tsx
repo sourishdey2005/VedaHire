@@ -26,7 +26,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { runResumeGeneration } from '@/app/actions';
-import { downloadTextFile } from '@/lib/download';
+import { downloadPdf } from '@/lib/download';
 
 const formSchema = z.object({
   profileDetails: z
@@ -145,13 +145,14 @@ export function ResumeGenerator() {
                     Your Generated Resume
                   </CardTitle>
                   <Button
-                    variant="ghost"
-                    size="icon"
+                    variant="outline"
+                    size="sm"
                     onClick={() =>
-                      downloadTextFile(result.resume, 'generated-resume.txt')
+                      downloadPdf(result.resume, 'generated-resume.pdf')
                     }
                   >
-                    <Download />
+                    <Download className="mr-2" />
+                    Download PDF
                   </Button>
                 </div>
               </CardHeader>

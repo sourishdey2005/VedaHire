@@ -26,7 +26,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { runCoverLetterGeneration } from '@/app/actions';
-import { downloadTextFile } from '@/lib/download';
+import { downloadPdf } from '@/lib/download';
 import { extractTextFromPDF } from '@/lib/pdf-utils';
 
 const formSchema = z.object({
@@ -252,16 +252,17 @@ export function CoverLetterGenerator() {
                     Your Generated Cover Letter
                   </CardTitle>
                   <Button
-                    variant="ghost"
-                    size="icon"
+                    variant="outline"
+                    size="sm"
                     onClick={() =>
-                      downloadTextFile(
+                      downloadPdf(
                         result.coverLetter,
-                        'cover-letter.txt'
+                        'cover-letter.pdf'
                       )
                     }
                   >
-                    <Download />
+                    <Download className="mr-2"/>
+                    Download PDF
                   </Button>
                 </div>
               </CardHeader>
