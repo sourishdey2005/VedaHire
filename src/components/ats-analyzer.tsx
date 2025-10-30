@@ -230,10 +230,10 @@ export function AtsAnalyzer() {
                       </span>
                     </div>
                     <Progress value={result.atsScore} className="w-full h-3" />
-                    <FormDescription className="mt-2">
+                    <p className="text-sm mt-2 text-muted-foreground">
                       This score estimates how well your resume matches the job
                       description for an ATS.
-                    </FormDescription>
+                    </p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">
