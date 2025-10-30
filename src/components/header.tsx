@@ -1,13 +1,23 @@
-import { Briefcase } from 'lucide-react';
+import { Briefcase, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from './ui/button';
 
 export function Header() {
   return (
     <header className="bg-card border-b p-4 shadow-sm">
-      <div className="container mx-auto flex items-center gap-3">
-        <Briefcase className="text-primary" size={28} />
-        <h1 className="text-2xl font-headline font-semibold text-primary">
-          VedaHire
-        </h1>
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Briefcase className="text-primary" size={28} />
+          <h1 className="text-2xl font-headline font-semibold text-primary">
+            VedaHire
+          </h1>
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/">
+            <ArrowLeft className="mr-2" />
+            Back to Home
+          </Link>
+        </Button>
       </div>
     </header>
   );
