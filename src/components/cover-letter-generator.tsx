@@ -40,11 +40,11 @@ const formSchema = z.object({
     .max(100, 'Job role must be less than 100 characters.'),
   resumeText: z
     .string()
-    .min(100, 'Resume text must be at least 100 characters.')
+    .min(1, 'Resume text is required.')
     .max(10000, 'Resume text must be less than 10,000 characters.'),
   jobDescription: z
     .string()
-    .min(100, 'Job description must be at least 100 characters.')
+    .min(1, 'Job description is required.')
     .max(10000, 'Job description must be less than 10,000 characters.'),
 });
 
