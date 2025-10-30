@@ -1,4 +1,3 @@
-// Define the types
 'use server';
 /**
  * @fileOverview This file defines a Genkit flow for generating a cover letter tailored to a resume and job description.
@@ -15,15 +14,9 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GenerateCoverLetterInputSchema = z.object({
-  resumeText: z
-    .string()
-    .describe('The text content of the resume.'),
-  jobDescription: z
-    .string()
-    .describe('The job description for the target position.'),
-  jobRole: z
-    .string()
-    .describe('The job role the user is applying for.'),
+  resumeText: z.string().describe('The text content of the resume.'),
+  jobDescription: z.string().describe('The job description for the target position.'),
+  jobRole: z.string().describe('The job role the user is applying for.'),
   userName: z.string().describe('The name of the user applying for the job'),
 });
 export type GenerateCoverLetterInput = z.infer<typeof GenerateCoverLetterInputSchema>;
@@ -39,18 +32,24 @@ const generateCoverLetterPrompt = ai.definePrompt({
   output: {schema: GenerateCoverLetterOutputSchema},
   prompt: `You are an expert resume and cover letter writer.
 
-  Based on the user's resume, their name, and the job description, write a cover letter tailored to the user and the job description provided.  The cover letter should be professional and highlight the user's strengths that align with the job requirements.
+Based on the user's resume, their name, and the job description, write a professional and compelling cover letter tailored to the user and the job description provided.
 
-  User Name: {{{userName}}}
-  Resume:
-  {{resumeText}}
+The cover letter should:
+- Be well-structured and easy to read.
+- Highlight the user's most relevant strengths and experiences that align with the job requirements.
+- Have a confident and professional tone.
+- Be formatted cleanly with appropriate spacing.
 
-  Job Description:
-  {{jobDescription}}
+User Name: {{{userName}}}
+Resume:
+{{resumeText}}
 
-  Job Role:
-  {{jobRole}}
-  `,
+Job Description:
+{{jobDescription}}
+
+Job Role:
+{{jobRole}}
+`,
 });
 
 const generateCoverLetterFlow = ai.defineFlow(

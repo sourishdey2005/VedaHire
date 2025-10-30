@@ -18,15 +18,17 @@ const ScoreResumeContentInputSchema = z.object({
 export type ScoreResumeContentInput = z.infer<typeof ScoreResumeContentInputSchema>;
 
 const ScoreResumeContentOutputSchema = z.object({
-  sections: z.array(
-    z.object({
-      sectionName: z.string().describe('The name of the resume section.'),
-      matchScore: z.number().describe('The match score for the section (0-100).'),
-      strengths: z.string().describe('Strengths of the section.'),
-      weaknesses: z.string().describe('Weaknesses of the section.'),
-      missingKeywords: z.array(z.string()).describe('Keywords missing from the section.'),
-    })
-  ).describe('An array of scored resume sections.'),
+  sections: z
+    .array(
+      z.object({
+        sectionName: z.string().describe('The name of the resume section.'),
+        matchScore: z.number().describe('The match score for the section (0-100).'),
+        strengths: z.string().describe('Strengths of the section, formatted as a bulleted list.'),
+        weaknesses: z.string().describe('Weaknesses of the section, formatted as a bulleted list.'),
+        missingKeywords: z.array(z.string()).describe('Keywords missing from the section.'),
+      })
+    )
+    .describe('An array of scored resume sections.'),
 });
 export type ScoreResumeContentOutput = z.infer<typeof ScoreResumeContentOutputSchema>;
 
@@ -40,7 +42,13 @@ const prompt = ai.definePrompt({
   output: {schema: ScoreResumeContentOutputSchema},
   prompt: `You are an expert resume content scorer. Given a resume and a job description, you will score each section of the resume based on how well it matches the job description.
 
-For each section, provide a match score (0-100), strengths, weaknesses, and a list of missing keywords.
+For each resume section (e.g., Summary, Experience, Education, Skills):
+1.  Provide a match score (0-100).
+2.  List the strengths as a bulleted list.
+3.  List the weaknesses as a bulleted list.
+4.  List any important missing keywords from the job description.
+
+Format the strengths and weaknesses as clear, concise bullet points.
 
 Resume:
 {{{resumeText}}}

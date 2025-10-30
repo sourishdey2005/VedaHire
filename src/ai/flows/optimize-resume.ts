@@ -11,26 +11,18 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const OptimizeResumeInputSchema = z.object({
-  resumeText: z
-    .string()
-    .describe('The text content of the resume to be optimized.'),
+  resumeText: z.string().describe('The text content of the resume to be optimized.'),
   jobDescription: z.string().describe('The job description to optimize the resume for.'),
 });
 export type OptimizeResumeInput = z.infer<typeof OptimizeResumeInputSchema>;
 
 const OptimizeResumeOutputSchema = z.object({
-  optimizedResume: z
-    .string()
-    .describe('The optimized resume content with highlighted improvements.'),
-  missingKeywords: z
-    .array(z.string())
-    .describe('A list of keywords missing from the resume based on the job description.'),
-  skillGaps: z
-    .array(z.string())
-    .describe('A list of skill gaps identified in the resume based on the job description.'),
+  optimizedResume: z.string().describe('The optimized resume content with highlighted improvements.'),
+  missingKeywords: z.array(z.string()).describe('A list of keywords missing from the resume based on the job description.'),
+  skillGaps: z.array(z.string()).describe('A list of skill gaps identified in the resume based on the job description.'),
   atsScoreImprovementSuggestions: z
     .string()
-    .describe('Suggestions on how to improve the resume ATS score.'),
+    .describe('Suggestions on how to improve the resume ATS score, formatted as a bulleted list.'),
 });
 export type OptimizeResumeOutput = z.infer<typeof OptimizeResumeOutputSchema>;
 
@@ -42,18 +34,20 @@ const optimizeResumePrompt = ai.definePrompt({
   name: 'optimizeResumePrompt',
   input: {schema: OptimizeResumeInputSchema},
   output: {schema: OptimizeResumeOutputSchema},
-  prompt: `You are an expert resume optimizer. Analyze the provided resume and job description. 
+  prompt: `You are an expert resume optimizer. Analyze the provided resume and job description.
 
-  Identify missing keywords and skill gaps in the resume compared to the job description.
-  Provide specific suggestions on how to improve the resume to better match the job description and increase its chances of passing through Applicant Tracking Systems (ATS).
+  Your goal is to provide a comprehensive optimization plan.
+
+  1.  **Optimized Resume**: Rewrite the resume to better align with the job description. Incorporate missing keywords naturally and rephrase experience to highlight relevant skills.
+  2.  **Missing Keywords**: Identify and list important keywords from the job description that are missing in the resume.
+  3.  **Skill Gaps**: Identify and list any skills or qualifications mentioned in the job description that the resume does not cover.
+  4.  **ATS Score Improvement Suggestions**: Provide a bulleted list of clear, actionable suggestions on how to improve the resume's ATS score.
 
   Resume:
   {{resumeText}}
 
   Job Description:
   {{jobDescription}}
-
-  Specifically, you should provide an optimized resume content, a list of missing keywords, a list of skill gaps and ATS score improvement suggestions.
   `,
 });
 

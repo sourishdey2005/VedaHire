@@ -1,4 +1,3 @@
-// src/ai/flows/generate-resume.ts
 'use server';
 /**
  * @fileOverview A resume generator AI agent.
@@ -30,7 +29,7 @@ const prompt = ai.definePrompt({
   name: 'generateResumePrompt',
   input: {schema: GenerateResumeInputSchema},
   output: {schema: GenerateResumeOutputSchema},
-  prompt: `You are an expert resume writer. Generate a resume based on the following user profile and job role.
+  prompt: `You are an expert resume writer. Generate a complete and professional resume based on the following user profile and job role.
 
 User Profile:
 {{{profileDetails}}}
@@ -38,7 +37,11 @@ User Profile:
 Job Role:
 {{{jobRole}}}
 
-Ensure the resume is well-structured, highlights relevant skills and experience, and is tailored to the specified job role. Focus on making it ATS friendly and professional.
+Ensure the resume is:
+- Well-structured with clear sections (e.g., Summary, Experience, Education, Skills).
+- Highlights relevant skills and experience tailored to the specified job role.
+- Uses action verbs and quantifiable achievements.
+- Is formatted cleanly for readability and is ATS-friendly.
 `,
 });
 
