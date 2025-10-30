@@ -114,7 +114,7 @@ export default function LandingPage() {
 
       <footer className="bg-muted p-6 md:py-8 w-full">
         <div className="container flex items-center justify-center text-sm text-muted-foreground">
-          Made By Sourish Dey
+          MADE BY SOURISH DEY
         </div>
       </footer>
     </div>
