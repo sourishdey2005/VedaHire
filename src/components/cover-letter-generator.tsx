@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Mail, LoaderCircle, Download } from 'lucide-react';
+import { Mail, LoaderCircle, Download, Upload, FileText } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -27,6 +27,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { runCoverLetterGeneration } from '@/app/actions';
 import { downloadTextFile } from '@/lib/download';
+import { extractTextFromPDF } from '@/lib/pdf-utils';
 
 const formSchema = z.object({
   userName: z
@@ -54,6 +55,7 @@ type GenerationResult = {
 export function CoverLetterGenerator() {
   const [result, setResult] = useState<GenerationResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [fileName, setFileName] = useState('');
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -65,6 +67,34 @@ export function CoverLetterGenerator() {
       jobDescription: '',
     },
   });
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.type === 'application/pdf') {
+        setFileName(file.name);
+        try {
+          const text = await extractTextFromPDF(file);
+          form.setValue('resumeText', text);
+        } catch (error) {
+          console.error('Error extracting text from PDF', error);
+          toast({
+            variant: 'destructive',
+            title: 'PDF Parsing Failed',
+            description: 'Could not extract text from the uploaded PDF.',
+          });
+        }
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Invalid File Type',
+          description: 'Please upload a PDF file.',
+        });
+      }
+    }
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
@@ -134,23 +164,50 @@ export function CoverLetterGenerator() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <FormField
-                control={form.control}
-                name="resumeText"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Your Resume Text</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Paste the full text of your resume here."
-                        className="min-h-[250px] md:min-h-[300px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-2">
+                <FormLabel>Your Resume</FormLabel>
+                <div className="flex items-center gap-2">
+                  <Button asChild variant="outline">
+                    <label
+                      htmlFor="resume-upload-cl"
+                      className="cursor-pointer"
+                    >
+                      <Upload className="mr-2" />
+                      Upload PDF
+                    </label>
+                  </Button>
+                  <Input
+                    id="resume-upload-cl"
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                    accept=".pdf"
+                  />
+                  {fileName && (
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <FileText className="text-primary" />
+                      <span>{fileName}</span>
+                    </div>
+                  )}
+                </div>
+                <FormField
+                  control={form.control}
+                  name="resumeText"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="sr-only">Your Resume Text</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Or paste the full text of your resume here."
+                          className="min-h-[250px] md:min-h-[300px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="jobDescription"
@@ -170,7 +227,11 @@ export function CoverLetterGenerator() {
               />
             </div>
 
-            <Button type="submit" disabled={loading} className="w-full md:w-auto">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full md:w-auto"
+            >
               {loading ? (
                 <LoaderCircle className="animate-spin" />
               ) : (
