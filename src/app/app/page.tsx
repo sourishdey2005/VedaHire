@@ -1,4 +1,4 @@
-'''"use client";
+"use client";
 
 import { FeatureTabs } from '@/components/feature-tabs';
 import Link from 'next/link';
@@ -110,4 +110,3 @@ export default function AppPage() {
     </div>
   );
 }
-'''

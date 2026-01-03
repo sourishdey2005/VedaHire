@@ -1,4 +1,3 @@
-'''
 const DB_NAME = 'VedaHireDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'user-data';
@@ -96,4 +95,3 @@ export async function del(key: string): Promise<void> {
     console.error('Failed to delete from IndexedDB:', error);
   }
 }
-''
