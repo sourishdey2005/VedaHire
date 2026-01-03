@@ -46,7 +46,7 @@ Installation
 
 Clone the repository:
 
-git clone [https://github.com/yourusername/veda-hire.git](https://github.com/yourusername/veda-hire.git)
+git clone 
 cd veda-hire
 
 
