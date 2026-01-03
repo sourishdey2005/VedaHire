@@ -1,4 +1,4 @@
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 
@@ -31,6 +31,16 @@ export function Footer() {
               aria-label="GitHub"
             >
               <Github className="h-5 w-5 text-muted-foreground hover:text-primary" />
+            </Link>
+          </Button>
+          <Button variant="ghost" size="icon" asChild>
+            <Link
+              href="https://sourishdey.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Website"
+            >
+              <Globe className="h-5 w-5 text-muted-foreground hover:text-primary" />
             </Link>
           </Button>
         </div>

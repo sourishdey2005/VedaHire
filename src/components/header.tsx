@@ -1,4 +1,4 @@
-import { Briefcase, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 
@@ -7,7 +7,7 @@ export function Header() {
     <header className="bg-card border-b p-4 shadow-sm">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Briefcase className="text-primary" size={28} />
+          <img src="https://res.cloudinary.com/dodhvvewu/image/upload/v1767441232/vedahire_jeaoal.jpg" alt="VedaHire Logo" className="w-8 h-8" />
           <h1 className="text-2xl font-headline font-semibold text-primary">
             VedaHire
           </h1>

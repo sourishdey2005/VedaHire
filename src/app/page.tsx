@@ -1,4 +1,4 @@
-import { Briefcase, Zap, Star, Sparkles, FileText, Mail, ArrowRight } from 'lucide-react';
+import { Zap, Star, Sparkles, FileText, Mail, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
           <Link href="/" className="flex items-center gap-3">
-            <Briefcase className="text-primary" size={28} />
+            <img src="https://res.cloudinary.com/dodhvvewu/image/upload/v1767441232/vedahire_jeaoal.jpg" alt="VedaHire Logo" className="w-8 h-8" />
             <span className="text-2xl font-headline font-semibold text-primary">
               VedaHire
             </span>
@@ -49,11 +49,10 @@ export default function LandingPage() {
                 </div>
               </div>
               <img
-                data-ai-hint="resume professional"
                 alt="Hero"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
                 height="600"
-                src="https://picsum.photos/seed/1/600/600"
+                src="https://res.cloudinary.com/dodhvvewu/image/upload/v1767441232/vedahire_jeaoal.jpg"
                 width="600"
               />
             </div>
